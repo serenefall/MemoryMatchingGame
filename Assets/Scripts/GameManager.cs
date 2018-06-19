@@ -14,11 +14,6 @@ public class GameManager : MonoBehaviour {
 
     private bool _init = false;
     private int _matches = 13;
-
-	// Use this for initialization
-	void Start () {
-	    	    
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -42,7 +37,7 @@ public class GameManager : MonoBehaviour {
                     choice = Random.Range(0, cards.Length);
                     test = !(cards [choice].GetComponent<Card>().initialized);
                 }
-                cards[choice].GetComponent<Card>().cardValue = 1;
+                cards[choice].GetComponent<Card>().cardValue = i;
                 cards[choice].GetComponent<Card>().initialized = true;
             }
         }
@@ -75,10 +70,10 @@ public class GameManager : MonoBehaviour {
         }
 
         if (c.Count == 2)
-            cardComparison(c);
+            StartCoroutine(cardComparison(c));
     }
 
-    void cardComparison(List<int> c)
+    IEnumerator cardComparison(List<int> c)
     {
         Card.DO_NOT = true;
         int x = 0;
@@ -88,7 +83,12 @@ public class GameManager : MonoBehaviour {
             _matches--;
             matchText.text = "Number of Matches: " + _matches;
             if (_matches == 0)
+            {
+                matchText.text = "You Win!!!";
+                yield return new WaitForSeconds(5);
                 SceneManager.LoadScene("Menu");
+            }
+                
         }
 
         for (int i=0; i<c.Count; i++)
@@ -96,5 +96,7 @@ public class GameManager : MonoBehaviour {
             cards[c[i]].GetComponent<Card>().state = x;
             cards[c[i]].GetComponent<Card>().falseCheck();
         }
+
+        yield return null;
     }
 }

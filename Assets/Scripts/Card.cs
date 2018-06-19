@@ -78,9 +78,4 @@ public class Card : MonoBehaviour {
             GetComponent<Image>().sprite = _cardFace;
         DO_NOT = false;
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }
