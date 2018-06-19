@@ -11,12 +11,14 @@ public class GameManager : MonoBehaviour {
     public Sprite cardBack;
     public GameObject[] cards;
     public Text matchText;
+    public Text stepText;
 
     private bool _init = false;
     private int _matches = 13;
-	
-	// Update is called once per frame
-	void Update () {
+    private int _steps = 0;
+
+    // Update is called once per frame
+    void Update () {
         if (!_init)
             initializeCards();
 
@@ -77,6 +79,10 @@ public class GameManager : MonoBehaviour {
     {
         Card.DO_NOT = true;
         int x = 0;
+
+        _steps++;
+        stepText.text = "Steps Used: " + _steps;
+
         if (cards [c[0]].GetComponent<Card>().cardValue == cards[c[1]].GetComponent<Card>().cardValue)
         {
             x = 2;
@@ -85,10 +91,10 @@ public class GameManager : MonoBehaviour {
             if (_matches == 0)
             {
                 matchText.text = "You Win!!!";
+                // Tells Unity to wait for 5 second
                 yield return new WaitForSeconds(5);
                 SceneManager.LoadScene("Menu");
-            }
-                
+            }              
         }
 
         for (int i=0; i<c.Count; i++)

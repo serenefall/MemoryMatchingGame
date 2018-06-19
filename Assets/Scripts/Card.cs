@@ -71,6 +71,7 @@ public class Card : MonoBehaviour {
 
     IEnumerator pause()
     {
+        // Tells Unity to wait for 1 second
         yield return new WaitForSeconds(1);
         if (_state == 0)
             GetComponent<Image>().sprite = _cardBack;
